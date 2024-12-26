@@ -20,16 +20,18 @@ interface BlogPost {
   poster: string;
 }
 
-interface Props {
+// Next.js dynamic page props (params)
+interface PageProps {
   params: {
     id: string;
   };
 }
 
-export default async function BlogPostPage({ params }: Props) {
-  const { id } = params; // No need to await here, params is already available
+// Blog post page component
+export default async function BlogPostPage({ params }: PageProps) {
+  const { id } = params; // Get the dynamic route parameter 'id'
 
-  // Fetch blog post data
+  // Fetch the blog post data from Sanity CMS
   const blogPost: BlogPost | null = await client.fetch(
     `*[_type == 'blog' && _id == $id][0]{
       name,
@@ -42,6 +44,7 @@ export default async function BlogPostPage({ params }: Props) {
     { id }
   );
 
+  // If no blog post is found, display a not found message
   if (!blogPost) {
     return <div className="text-center">Blog post not found!</div>;
   }
@@ -74,7 +77,7 @@ export default async function BlogPostPage({ params }: Props) {
         />
       </div>
 
-      {/* Pass control to the Client Component */}
+      {/* Pass control to the Client Component for Blog Comments */}
       <BlogComments />
     </div>
   );
