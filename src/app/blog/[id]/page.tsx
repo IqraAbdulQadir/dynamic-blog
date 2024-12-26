@@ -6,8 +6,8 @@ import Image from 'next/image';
 // Define the content interface
 interface ContentBlock {
   _type: string;
-  children?: any[]; // Replace with a more specific type if known
-  markDefs?: any[]; // Replace with a more specific type if known
+  children?: { _key?: string; _type: 'span'; text: string; marks?: string[] }[]; // More specific type for children
+  markDefs?: { _key: string; _type: string; href: string }[]; // More specific type for markDefs
 }
 
 // Define the blog interface

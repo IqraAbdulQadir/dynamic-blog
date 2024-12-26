@@ -3,7 +3,6 @@
 import Link from 'next/link';
 import { useEffect, useState } from 'react';
 import { client } from '@/sanity/lib/client';
-import Image from 'next/image';
 
 // Blog interface
 interface Blog {
@@ -20,23 +19,32 @@ const FeaturedSection: React.FC = () => {
 
   useEffect(() => {
     const fetchBlogs = async () => {
-        try {
-          // Fetch data from Sanity with proper typing
-          const res: Blog[] = await client.fetch(
-            `*[_type == 'blog']{
-              _id,
-              name,
-              subheading,
-              author,
-              publishedAt,
-              "image": poster.asset->url
-            }`
-          );
-          setBlogs(res);  // No need to map to a new object as the response is already in the correct shape
-        } catch (error) {
-          console.error('Error fetching blogs from Sanity:', error);
-        }
-      };
+      try {
+        // Fetch data from Sanity
+        const res = await client.fetch(
+          `*[_type == 'blog']{
+            _id,
+            name,
+            subheading,
+            author,
+            publishedAt,
+            "image": poster.asset->url
+          }`
+        );
+        setBlogs(
+          res.map((blog: any) => ({
+            id: blog._id,
+            name: blog.name,
+            subheading: blog.subheading,
+            author: blog.author,
+            publishedAt: blog.publishedAt,
+            image: blog.image,
+          }))
+        );
+      } catch (error) {
+        console.error('Error fetching blogs from Sanity:', error);
+      }
+    };
 
     fetchBlogs();
   }, []);
@@ -51,14 +59,12 @@ const FeaturedSection: React.FC = () => {
           >
             {/* Displaying the image */}
             {blog.image && (
-  <Image
-    src={blog.image}
-    alt={blog.name}
-    width={500}   // Set a width for the image
-    height={300}  // Set a height for the image
-    className="w-full h-48 object-cover rounded-t-lg mb-4"
-  />
-)}
+              <img
+                src={blog.image}
+                alt={blog.name}
+                className="w-full h-48 object-cover rounded-t-lg mb-4"
+              />
+            )}
             <h3 className="text-xl font-bold text-[#333333] mb-4">{blog.name}</h3>
             <p className="text-[#2f4f4f] text-sm mb-4">
               <span>{blog.author}</span> | <span>{new Date(blog.publishedAt).toLocaleDateString()}</span>
