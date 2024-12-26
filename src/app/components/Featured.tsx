@@ -14,6 +14,16 @@ interface Blog {
   image: string;
 }
 
+// Define a type for the response from Sanity
+interface BlogResponse {
+  _id: string;
+  name: string;
+  subheading: string;
+  author: string;
+  publishedAt: string;
+  image: string;  // Assuming the image comes as a direct URL
+}
+
 const FeaturedSection: React.FC = () => {
   const [blogs, setBlogs] = useState<Blog[]>([]);
 
@@ -21,7 +31,7 @@ const FeaturedSection: React.FC = () => {
     const fetchBlogs = async () => {
       try {
         // Fetch data from Sanity
-        const res = await client.fetch(
+        const res: BlogResponse[] = await client.fetch(
           `*[_type == 'blog']{
             _id,
             name,
@@ -31,8 +41,9 @@ const FeaturedSection: React.FC = () => {
             "image": poster.asset->url
           }`
         );
+
         setBlogs(
-          res.map((blog: any) => ({
+          res.map((blog) => ({
             id: blog._id,
             name: blog.name,
             subheading: blog.subheading,
