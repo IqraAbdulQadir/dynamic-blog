@@ -20,7 +20,7 @@ interface BlogPost {
   poster: string;
 }
 
-// Define the correct type for dynamic route params
+// Adjust the type for `generateMetadata`
 export async function generateMetadata({ params }: { params: { id: string } }) {
   const blogPost = await client.fetch(
     `*[_type == 'blog' && _id == $id][0]{
@@ -36,6 +36,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
   return { title: 'Blog Post Not Found' };
 }
 
+// Adjust the type for dynamic route
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
   const { id } = params; // Get the dynamic route parameter 'id'
 
