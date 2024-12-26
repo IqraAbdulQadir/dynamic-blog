@@ -27,8 +27,7 @@ interface Props {
 }
 
 export default async function BlogPostPage({ params }: Props) {
-  // Await params
-  const { id } = await params; // This line ensures we await the params
+  const { id } = params; // No need to await here, params is already available
 
   // Fetch blog post data
   const blogPost: BlogPost | null = await client.fetch(
