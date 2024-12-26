@@ -19,3 +19,22 @@ body {
   background: var(--background);
   font-family: Arial, Helvetica, sans-serif;
 }
+
+*
+{
+  box-sizing: border-box;
+  
+}
+
+
+body,html {
+  overflow-x: hidden
+}
+
+html, body {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+}
