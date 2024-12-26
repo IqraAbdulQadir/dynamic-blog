@@ -20,15 +20,23 @@ interface BlogPost {
   poster: string;
 }
 
-// Next.js dynamic page props (params)
-interface PageProps {
-  params: {
-    id: string;
-  };
+// Define the correct type for dynamic route params
+export async function generateMetadata({ params }: { params: { id: string } }) {
+  const blogPost = await client.fetch(
+    `*[_type == 'blog' && _id == $id][0]{
+      name
+    }`,
+    { id: params.id }
+  );
+
+  if (blogPost) {
+    return { title: blogPost.name };
+  }
+
+  return { title: 'Blog Post Not Found' };
 }
 
-// Blog post page component
-export default async function BlogPostPage({ params }: PageProps) {
+export default async function BlogPostPage({ params }: { params: { id: string } }) {
   const { id } = params; // Get the dynamic route parameter 'id'
 
   // Fetch the blog post data from Sanity CMS
