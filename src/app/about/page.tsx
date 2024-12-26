@@ -26,7 +26,7 @@ const About: React.FC = () => {
         </h2>
         <p className="text-lg md:text-xl text-center mb-6">
           Join us on this exciting journey as we explore the endless possibilities of AI. 
-          Whether you're a beginner or an expert, there's something for everyone at AI Insights.
+          Whether you are a beginner or an expert, there is something for everyone at AI Insights.
         </p>
       </div>
     </main>

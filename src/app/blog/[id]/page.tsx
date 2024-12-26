@@ -1,12 +1,20 @@
 import { client } from '@/sanity/lib/client';
 import { PortableText } from '@portabletext/react';
 import BlogComments from './BlogComments';
+import Image from 'next/image';
+
+// Define the content interface
+interface ContentBlock {
+  _type: string;
+  children?: any[]; // Replace with a more specific type if known
+  markDefs?: any[]; // Replace with a more specific type if known
+}
 
 // Define the blog interface
 interface BlogPost {
   name: string;
   subheading: string;
-  content: any[];
+  content: ContentBlock[]; // Use the ContentBlock type instead of any[]
   author: string;
   publishedAt: string;
   poster: string;
@@ -46,9 +54,11 @@ export default async function BlogPostPage({ params }: Props) {
         By {blogPost.author} | {new Date(blogPost.publishedAt).toLocaleDateString()}
       </p>
       {blogPost.poster && (
-        <img
+        <Image
           src={blogPost.poster}
           alt={blogPost.name}
+          width={800} // Specify appropriate width
+          height={600} // Specify appropriate height
           className="w-full h-96 object-cover rounded-lg mb-6"
         />
       )}

@@ -1,4 +1,5 @@
-export default {
+// Assign the object to a variable before exporting
+const blogSchema = {
   name: 'blog',
   type: 'document',
   title: 'Blog',
@@ -61,3 +62,6 @@ export default {
     },
   ],
 };
+
+// Export the schema
+export default blogSchema;

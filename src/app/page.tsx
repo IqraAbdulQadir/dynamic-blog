@@ -1,8 +1,6 @@
-import { client } from '@/sanity/lib/client';
 import React from 'react';
 import HeroSection from './components/Hero';
 import FeaturedSection from './components/Featured';
-import Footer from './components/Footer';  // Import the Footer component
 
 export default async function Home() {
   return (
