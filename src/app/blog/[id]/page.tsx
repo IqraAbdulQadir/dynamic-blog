@@ -1,5 +1,5 @@
 import { client } from '@/sanity/lib/client';
-import { PortableText } from '@portabletext/react';
+import { PortableText, PortableTextBlock } from '@portabletext/react';
 import BlogComments from './BlogComments';
 import Image from 'next/image';
 
@@ -7,7 +7,7 @@ import Image from 'next/image';
 interface BlogPost {
   name: string;
   subheading: string;
-  content: any[];
+  content: PortableTextBlock[]; // Specify the type for content
   author: string;
   publishedAt: string;
   poster: string;
@@ -26,7 +26,7 @@ export async function generateMetadata({ params }: { params: { id: string } }) {
 // Blog post page component
 export default async function BlogPostPage({ params }: { params: { id: string } }) {
   const { id } = await params; // Await params to access the id
-  const blogPost = await client.fetch(
+  const blogPost = await client.fetch<BlogPost>(
     `*[_type == 'blog' && _id == $id][0]{
       name,
       subheading,
