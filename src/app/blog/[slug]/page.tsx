@@ -78,23 +78,22 @@
 // }
 
 
-// src/app/blog/[slug]/page.tsx
-
 import { getBlogBySlug } from '@/sanity/lib/sanityQueries'; // Import the function to fetch a blog post by slug
 import { notFound } from 'next/navigation'; // For handling 404
 import BlogComments from './BlogComments';
 import { urlFor } from '@/sanity/lib/image';
-import { PortableText } from '@portabletext/react'; 
+import { PortableText } from '@portabletext/react';
 
+// Adjust the type of params to not be a Promise
 interface BlogProps {
-  params: Promise<{
+  params: {
     slug: string;
-  }>;
+  };
 }
 
-const BlogPost = async (props: BlogProps) => {
-  const params = await props.params;
-  const { slug } = params;
+// Make the component async since you're doing async operations
+const BlogPost = async ({ params }: BlogProps) => {
+  const { slug } = params; // No need for await here as params are directly available
   const blog = await getBlogBySlug(slug); // Fetch blog data
 
   if (!blog) {
@@ -112,16 +111,12 @@ const BlogPost = async (props: BlogProps) => {
           className="w-full h-auto mb-4"
         />
       )}
-   <div className="prose">
+      <div className="prose">
         {/* Use PortableText to render the rich text */}
         <PortableText value={blog.content} />
       </div>
-      </div>
-  
+    </div>
   );
 };
 
-
 export default BlogPost;
-
-
