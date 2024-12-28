@@ -1,6 +1,7 @@
 import React from 'react';
 import HeroSection from './components/Hero';
-import FeaturedSection from './components/Featured';
+
+import BlogPage from './blog/page';
 
 export default async function Home() {
   return (
@@ -16,7 +17,7 @@ export default async function Home() {
             <h2 className="text-3xl md:text-4xl font-bold text-center mb-8 text-[#2f4f4f]">
               Featured Blog Posts
             </h2>
-            <FeaturedSection />
+            <BlogPage />
           </div>
         </section>
       </main>

@@ -87,12 +87,13 @@ import { urlFor } from '@/sanity/lib/image';
 import { PortableText } from '@portabletext/react'; 
 
 interface BlogProps {
-  params: {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-const BlogPost = async ({ params }: BlogProps) => {
+const BlogPost = async (props: BlogProps) => {
+  const params = await props.params;
   const { slug } = params;
   const blog = await getBlogBySlug(slug); // Fetch blog data
 
