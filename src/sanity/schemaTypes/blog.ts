@@ -1,4 +1,3 @@
-// Assign the object to a variable before exporting
 const blogSchema = {
   name: 'blog',
   type: 'document',
@@ -19,7 +18,7 @@ const blogSchema = {
       name: 'poster',
       type: 'image',
       options: {
-        hotspot: true, // <-- Defaults to false
+        hotspot: true,
       },
       fields: [
         {
@@ -56,6 +55,15 @@ const blogSchema = {
       ],
     },
     {
+      name: 'slug',
+      type: 'slug',
+      title: 'Slug',
+      options: {
+        source: 'name',
+        maxLength: 200,
+      },
+    },
+    {
       name: 'author',
       type: 'string',
       title: 'Author',
@@ -63,5 +71,4 @@ const blogSchema = {
   ],
 };
 
-// Export the schema
 export default blogSchema;
