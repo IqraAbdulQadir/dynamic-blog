@@ -19,14 +19,22 @@
 import { getAllBlogs } from '@/sanity/lib/sanityQueries';
 import Link from 'next/link';
 
+interface Blog {
+  slug: {
+    current: string;
+  };
+  name: string;
+  subheading: string;
+}
+
 const BlogPage = async () => {
-  const blogs = await getAllBlogs();
+  const blogs: Blog[] = await getAllBlogs(); // Specify the type here
 
   return (
     <div className="container mx-auto px-4 py-8">
       <h1 className="text-4xl font-bold mb-6">Blog</h1>
       <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-3">
-        {blogs.map((blog: any) => (
+        {blogs.map((blog: Blog) => ( // Use the Blog type here
           <div key={blog.slug.current} className="border rounded-lg p-4">
             <h2 className="text-2xl font-semibold">
               <Link href={`/blog/${blog.slug.current}`}>{blog.name}</Link>

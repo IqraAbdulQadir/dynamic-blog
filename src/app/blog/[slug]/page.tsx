@@ -115,6 +115,7 @@ const BlogPost = async ({ params }: BlogProps) => {
         {/* Use PortableText to render the rich text */}
         <PortableText value={blog.content} />
       </div>
+      <BlogComments/>
     </div>
   );
 };
